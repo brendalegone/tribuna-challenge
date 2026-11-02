@@ -1,0 +1,108 @@
+@import "tailwindcss";
+/* Inter con su eje opsz, como pide la instalación de Fluid */
+@import "@fontsource-variable/inter/opsz.css";
+@import "./styles/fluid-tokens.css";
+@import "./styles/fluid-registry.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ───────────── Tokens propios de Tribuna ─────────────
+   Encima del sistema de Fluid. Mismo método que Fluid: cada color se escribe
+   una vez con light-dark() y se re-declara en .light/.dark para que el modo
+   oscuro funcione en un subárbol (solo la web, no el shell de la demo). */
+:root,
+.light,
+.dark {
+  --bg: var(--background);
+  --fg: var(--foreground);
+  --fg-muted: var(--muted-foreground);
+  --fg-subtle: light-dark(#8a8a96, #74747f);
+
+  /* Marca = el acento de Fluid (--fluid-accent, declarado en <html>) */
+  --brand: var(--fluid-accent, #4f39f6);
+  --brand-fg: light-dark(#ffffff, #0b0b1a);
+  --brand-text: light-dark(#4330e0, #a9b0ff);
+  --brand-soft: light-dark(#efecff, #23224a);
+
+  /* Estados para texto (Fluid trae success/warning vivos para íconos) */
+  --ok: light-dark(#15803d, #4ade80);
+  --ok-soft: light-dark(#e8f6ed, #11291a);
+  --warn: light-dark(#a15c07, #fbbf24);
+  --warn-soft: light-dark(#fdf3dc, #2e2309);
+  --danger: light-dark(#c2261d, #f87171);
+  --danger-soft: light-dark(#fdecea, #331414);
+
+  /* Identidad del club ficticio y WhatsApp */
+  --club: light-dark(#1e3a5f, #2b5486);
+  --club-fg: light-dark(#a8d8f0, #bfe5f7);
+  --chat-bg: light-dark(#eceff3, #101014);
+  --bubble-in: light-dark(#ffffff, #1f1f25);
+  --bubble-out: light-dark(#dfe1e8, #2c2c35);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-brand: var(--brand);
+  --color-brand-fg: var(--brand-fg);
+  --color-brand-text: var(--brand-text);
+  --color-brand-soft: var(--brand-soft);
+  --color-success: var(--ok);
+  --color-success-soft: var(--ok-soft);
+  --color-warning: var(--warn);
+  --color-warning-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-club: var(--club);
+  --color-club-fg: var(--club-fg);
+  --color-chat-bg: var(--chat-bg);
+  --color-bubble-in: var(--bubble-in);
+  --color-bubble-out: var(--bubble-out);
+  --shadow-soft: var(--shadow-2);
+  --shadow-card: var(--shadow-4);
+}
+
+/* El producto arranca en claro; el modo oscuro vive solo dentro de la web */
+html {
+  color-scheme: light;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Las tiras de pestañas se desplazan en horizontal sin mostrar barras
+   y nunca en vertical (el hover no debe hacer aparecer scroll). */
+[role="tablist"] {
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+[role="tablist"]::-webkit-scrollbar {
+  display: none;
+}
